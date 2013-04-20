@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		16328D201722FAF100AB50F7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16328D1F1722FAF100AB50F7 /* main.cpp */; };
 		16328D221722FAF100AB50F7 /* WebServerTest.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 16328D211722FAF100AB50F7 /* WebServerTest.1 */; };
+		16328D291722FD1200AB50F7 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D281722FD1200AB50F7 /* libiconv.dylib */; };
+		16328D2B1722FE5F00AB50F7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2A1722FE5F00AB50F7 /* CoreServices.framework */; };
+		16328D2D1722FE7D00AB50F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2C1722FE7D00AB50F7 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +31,9 @@
 		16328D1C1722FAF100AB50F7 /* WebServerTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = WebServerTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16328D1F1722FAF100AB50F7 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		16328D211722FAF100AB50F7 /* WebServerTest.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = WebServerTest.1; sourceTree = "<group>"; };
+		16328D281722FD1200AB50F7 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = ../../../../usr/lib/libiconv.dylib; sourceTree = "<group>"; };
+		16328D2A1722FE5F00AB50F7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = ../../../../System/Library/Frameworks/CoreServices.framework; sourceTree = "<group>"; };
+		16328D2C1722FE7D00AB50F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16328D291722FD1200AB50F7 /* libiconv.dylib in Frameworks */,
+				16328D2B1722FE5F00AB50F7 /* CoreServices.framework in Frameworks */,
+				16328D2D1722FE7D00AB50F7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +69,9 @@
 		16328D1E1722FAF100AB50F7 /* WebServerTest */ = {
 			isa = PBXGroup;
 			children = (
+				16328D2C1722FE7D00AB50F7 /* Foundation.framework */,
+				16328D281722FD1200AB50F7 /* libiconv.dylib */,
+				16328D2A1722FE5F00AB50F7 /* CoreServices.framework */,
 				16328D1F1722FAF100AB50F7 /* main.cpp */,
 				16328D211722FAF100AB50F7 /* WebServerTest.1 */,
 			);
@@ -130,7 +142,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -162,7 +174,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -184,6 +196,19 @@
 		16328D261722FAF100AB50F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../Nyx/include,
+					../Nyx/include/OSX,
+					../Nyx/include/NyxNet,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					../Nyx/Lib/OSX/Debug_64,
+					/usr/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lNyxBase",
+					"-lNyxNet",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -191,6 +216,19 @@
 		16328D271722FAF100AB50F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../Nyx/include,
+					../Nyx/include/OSX,
+					../Nyx/include/NyxNet,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					../Nyx/Lib/OSX/Debug_64,
+					/usr/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-lNyxBase",
+					"-lNyxNet",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
