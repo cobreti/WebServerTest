@@ -11,6 +11,8 @@
 #include <Nyx.hpp>
 #include <NyxNet.hpp>
 
+#include "ConnectionHandler.hpp"
+
 int main(int argc, const char * argv[])
 {
     Nyx::CModuleRef             refModule = Nyx::CModule::Alloc();
@@ -21,11 +23,16 @@ int main(int argc, const char * argv[])
     
     NYXTRACE(0x0, L"starting" );
 
-    // insert code here...
-    std::cout << "Hello, World!\n";
     
+    NyxNet::CTcpIpServerRef     refServer = NyxNet::CTcpIpServer::Alloc();
+    CConnectionHandlerRef       refConnectionHandler = new CConnectionHandler();
+    
+    refServer->Create(8000, 100, refConnectionHandler);
+    refServer->Start();
     
     getchar();
+    
+    refServer->Stop();
     
     NYXTRACE(0x0, L"ending" );
     

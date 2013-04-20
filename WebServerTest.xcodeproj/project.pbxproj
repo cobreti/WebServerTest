@@ -12,6 +12,7 @@
 		16328D291722FD1200AB50F7 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D281722FD1200AB50F7 /* libiconv.dylib */; };
 		16328D2B1722FE5F00AB50F7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2A1722FE5F00AB50F7 /* CoreServices.framework */; };
 		16328D2D1722FE7D00AB50F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2C1722FE7D00AB50F7 /* Foundation.framework */; };
+		16328D301723036B00AB50F7 /* ConnectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		16328D281722FD1200AB50F7 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = ../../../../usr/lib/libiconv.dylib; sourceTree = "<group>"; };
 		16328D2A1722FE5F00AB50F7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = ../../../../System/Library/Frameworks/CoreServices.framework; sourceTree = "<group>"; };
 		16328D2C1722FE7D00AB50F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
+		16328D2E172302D500AB50F7 /* ConnectionHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConnectionHandler.hpp; sourceTree = "<group>"; };
+		16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionHandler.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,8 @@
 				16328D2A1722FE5F00AB50F7 /* CoreServices.framework */,
 				16328D1F1722FAF100AB50F7 /* main.cpp */,
 				16328D211722FAF100AB50F7 /* WebServerTest.1 */,
+				16328D2E172302D500AB50F7 /* ConnectionHandler.hpp */,
+				16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */,
 			);
 			path = WebServerTest;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16328D201722FAF100AB50F7 /* main.cpp in Sources */,
+				16328D301723036B00AB50F7 /* ConnectionHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
