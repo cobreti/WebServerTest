@@ -11,6 +11,10 @@
 #include <Nyx.hpp>
 #include <NyxNet.hpp>
 
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
 #include "ConnectionHandler.hpp"
 
 int main(int argc, const char * argv[])
@@ -19,9 +23,19 @@ int main(int argc, const char * argv[])
     NyxNet::CModuleRef          refNetModule = NyxNet::CModule::Alloc();
     Nyx::CTraceCompositorRef    refTraceCompositor = Nyx::CTraceCompositor::Alloc();
     
+    
     refTraceCompositor->SetOutput( NyxNet::CPipeTraceOutput::Alloc("WebServerTest") );
     
     NYXTRACE(0x0, L"starting" );
+
+    CRYPTO_malloc_init(); // Initialize malloc, free, etc for OpenSSL's use
+    SSL_library_init(); // Initialize OpenSSL's SSL libraries
+    SSL_load_error_strings(); // Load SSL error strings
+    ERR_load_BIO_strings(); // Load BIO error strings
+    OpenSSL_add_all_algorithms(); // Load all available encryption algorithms
+    
+    
+
 
     
     NyxNet::CTcpIpServerRef     refServer = NyxNet::CTcpIpServer::Alloc();

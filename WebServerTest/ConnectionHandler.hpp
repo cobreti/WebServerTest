@@ -11,6 +11,12 @@
 
 #include <NyxNet.hpp>
 
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
+#include <map>
+
 DECLARE_OBJECTREF(CConnectionHandler)
 
 class CConnectionHandler : public Nyx::CRefCount_Impl<NyxNet::IConnectionHandler>
@@ -24,6 +30,7 @@ public: // IConnectionHandler methods
     virtual void HandleStream( Nyx::IStreamRW& rStream );
     virtual Nyx::NyxResult OnNewConnection( NyxNet::IConnection* pConnection, NyxNet::IConnectionHandler*& pCloneHandler );
     virtual void OnConnectionTerminated( NyxNet::IConnection* pConnection );
+    
 };
 
 

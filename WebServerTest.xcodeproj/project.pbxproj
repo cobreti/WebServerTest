@@ -13,6 +13,7 @@
 		16328D2B1722FE5F00AB50F7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2A1722FE5F00AB50F7 /* CoreServices.framework */; };
 		16328D2D1722FE7D00AB50F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16328D2C1722FE7D00AB50F7 /* Foundation.framework */; };
 		16328D301723036B00AB50F7 /* ConnectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */; };
+		16328D3517234FAC00AB50F7 /* SSLConnectionHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16328D3317234FAC00AB50F7 /* SSLConnectionHandler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		16328D2C1722FE7D00AB50F7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = ../../../../System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
 		16328D2E172302D500AB50F7 /* ConnectionHandler.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ConnectionHandler.hpp; sourceTree = "<group>"; };
 		16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionHandler.cpp; sourceTree = "<group>"; };
+		16328D3317234FAC00AB50F7 /* SSLConnectionHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SSLConnectionHandler.cpp; sourceTree = "<group>"; };
+		16328D3417234FAC00AB50F7 /* SSLConnectionHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SSLConnectionHandler.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +82,8 @@
 				16328D211722FAF100AB50F7 /* WebServerTest.1 */,
 				16328D2E172302D500AB50F7 /* ConnectionHandler.hpp */,
 				16328D2F1723036B00AB50F7 /* ConnectionHandler.cpp */,
+				16328D3317234FAC00AB50F7 /* SSLConnectionHandler.cpp */,
+				16328D3417234FAC00AB50F7 /* SSLConnectionHandler.hpp */,
 			);
 			path = WebServerTest;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 			files = (
 				16328D201722FAF100AB50F7 /* main.cpp in Sources */,
 				16328D301723036B00AB50F7 /* ConnectionHandler.cpp in Sources */,
+				16328D3517234FAC00AB50F7 /* SSLConnectionHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,14 +212,18 @@
 					../Nyx/include,
 					../Nyx/include/OSX,
 					../Nyx/include/NyxNet,
+					"../NyxTraceViewer/openssl-1.0.1c/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					../Nyx/Lib/OSX/Debug_64,
 					/usr/lib,
+					"../NyxTraceViewer/openssl-1.0.1c",
 				);
 				OTHER_LDFLAGS = (
 					"-lNyxBase",
 					"-lNyxNet",
+					"-lcrypto",
+					"-lssl",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -226,14 +236,18 @@
 					../Nyx/include,
 					../Nyx/include/OSX,
 					../Nyx/include/NyxNet,
+					"../NyxTraceViewer/openssl-1.0.1c/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					../Nyx/Lib/OSX/Debug_64,
 					/usr/lib,
+					"../NyxTraceViewer/openssl-1.0.1c",
 				);
 				OTHER_LDFLAGS = (
 					"-lNyxBase",
 					"-lNyxNet",
+					"-lcrypto",
+					"-lssl",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
