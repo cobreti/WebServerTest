@@ -44,7 +44,11 @@ Nyx::NyxResult CConnectionHandler::OnNewConnection( NyxNet::IConnection* pConnec
 void CConnectionHandler::OnConnectionTerminated( NyxNet::IConnection* pConnection )
 {
     NYXTRACE(0x0, L"connection terminated");
-//    delete this;
+    delete this;
 }
 
 
+void CConnectionHandler::CloseConnection( NyxNet::IConnection* pConnection )
+{
+    
+}

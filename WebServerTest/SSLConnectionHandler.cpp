@@ -28,7 +28,8 @@ CSSLConnectionHandler::CSSLConnectionHandler(SSL_CTX* ctx, SSL* ssl, BIO* bio, N
     m_ctx(ctx),
     m_ssl(ssl),
     m_bio(bio),
-    m_pConnection(pConnection)
+    m_pConnection(pConnection),
+    m_bRunning(true)
 {
     int res = 0;
     
@@ -126,7 +127,7 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
     NyxNet::CSocketRef refSocket = m_pConnection->Socket();
     int socketid = refSocket->tcpsocket();
    
-    while (1)
+    while (m_bRunning)
     {
         Nyx::CAString content;
         Nyx::CAString header;
@@ -178,6 +179,8 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
         else
             sleep(1);
     }
+    
+    NYXTRACE(0x0, L"ending SSLConnection stream handler");
 }
 
 
@@ -218,7 +221,12 @@ Nyx::NyxResult CSSLConnectionHandler::OnNewConnection( NyxNet::IConnection* pCon
 void CSSLConnectionHandler::OnConnectionTerminated( NyxNet::IConnection* pConnection )
 {
     NYXTRACE(0x0, L"ssl connection terminated");
-//    delete this;
+    delete this;
 }
 
 
+void CSSLConnectionHandler::CloseConnection( NyxNet::IConnection* pConnection )
+{
+    NYXTRACE(0x0, L"Closing connection");
+    m_bRunning = false;
+}

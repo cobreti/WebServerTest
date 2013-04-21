@@ -30,6 +30,7 @@ public: // IConnectionHandler methods
     virtual void HandleStream( Nyx::IStreamRW& rStream );
     virtual Nyx::NyxResult OnNewConnection( NyxNet::IConnection* pConnection, NyxNet::IConnectionHandler*& pCloneHandler );
     virtual void OnConnectionTerminated( NyxNet::IConnection* pConnection );
+    virtual void CloseConnection( NyxNet::IConnection* pConnection );
     
 private:
     
@@ -41,7 +42,7 @@ private:
     SSL*                        m_ssl;
     BIO*                        m_bio;
     NyxNet::IConnection*        m_pConnection;
-    int                         m_Count;
+    bool                        m_bRunning;
     
 //    TOpenedConnectionsTable     m_OpenedConnectionsTable;
 };
