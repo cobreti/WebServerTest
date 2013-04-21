@@ -93,7 +93,8 @@ CSSLConnectionHandler::CSSLConnectionHandler(SSL_CTX* ctx, SSL* ssl, BIO* bio, N
         // Set up our BIO object to use the client socket
         
         NyxNet::CSocketRef refSocket = pConnection->Socket();
-        int socketid = refSocket->tcpsocket();
+        NyxNet::CTcpIpSocket*   pTcpIpSocket = refSocket->TcpIpSocket();
+        int socketid = pTcpIpSocket->TcpIpSocketId();
         
         m_bio = BIO_new_socket(socketid, BIO_NOCLOSE);
         BIO_set_nbio(m_bio, 0);
@@ -124,8 +125,8 @@ CSSLConnectionHandler::~CSSLConnectionHandler()
 
 void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
 {
-    NyxNet::CSocketRef refSocket = m_pConnection->Socket();
-    int socketid = refSocket->tcpsocket();
+//    NyxNet::CSocketRef refSocket = m_pConnection->Socket();
+//    int socketid = refSocket->tcpsocket();
    
     while (m_bRunning)
     {
@@ -186,11 +187,17 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
 
 Nyx::NyxResult CSSLConnectionHandler::OnNewConnection( NyxNet::IConnection* pConnection, NyxNet::IConnectionHandler*& pCloneHandler )
 {
-    NYXTRACE(0x0, L"new ssl connection");
+//    NYXTRACE(0x0, L"new ssl connection");
     
     NyxNet::CSocketRef refSocket = pConnection->Socket();
-    int socketid = refSocket->tcpsocket();
-        
+    NyxNet::CTcpIpSocket*   pTcpIpSocket = refSocket->TcpIpSocket();
+    int socketid = pTcpIpSocket->TcpIpSocketId();
+    
+    NYXTRACE(0x0, L"new ssl connection from "
+             << Nyx::CTF_AnsiText(pTcpIpSocket->ClientAddress().Ip().c_str())
+             << L" port "
+             << Nyx::CTF_Int(pTcpIpSocket->ClientAddress().Port()) );
+    
     BIO* sslclient = BIO_new_socket(socketid, BIO_NOCLOSE);
     BIO_set_nbio(sslclient, 0);
     SSL_set_bio(m_ssl, sslclient, sslclient);
