@@ -225,6 +225,7 @@
 					"-lNyxNet",
 					"-lcrypto",
 					"-lssl",
+					"-lNyxWebSvr",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -250,6 +251,7 @@
 					"-lNyxNet",
 					"-lcrypto",
 					"-lssl",
+					"-lNyxWebSvr",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

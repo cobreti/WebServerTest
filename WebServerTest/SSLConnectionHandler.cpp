@@ -15,6 +15,9 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+
 
 int password_callback(char *buf, int size, int rwflag, void *password)
 {
@@ -128,6 +131,10 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
 //    NyxNet::CSocketRef refSocket = m_pConnection->Socket();
 //    int socketid = refSocket->tcpsocket();
    
+    Nyx::TBuffer<char>          sockBuffer;
+    
+    sockBuffer.Alloc(4096);
+    
     while (m_bRunning)
     {
         Nyx::CAString content;
@@ -139,6 +146,7 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
         
         header =    "HTTP/1.1 200 OK\r\n"
                     "Content-Type: text/html; charset=utf-8\r\n"
+//                    "set-Cookie: test;\r\n"
                     "Content-Length: 82\r\n\r\n";
     //                "Server: NyxWebServer\n";
         
@@ -149,16 +157,56 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
                     "</body>\r\n"
                     "</html>\r\n";
         
-        ::memset(buffer, 0, sizeof(buffer));
+
+//        ::memset(buffer, 0, sizeof(buffer));
+        
         
         //    res = rStream.Read(buffer, 4095, readSize);
-        readSize = SSL_read(m_ssl, buffer, 4095);
+        readSize = SSL_read(m_ssl, sockBuffer.getWritePos(), sockBuffer.FreeSize());
         if ( readSize > 0 )
         {
+            NyxNet::CSocketRef refSocket = m_pConnection->Socket();
+            NyxNet::CTcpIpSocket*   pTcpIpSocket = refSocket->TcpIpSocket();
+            
+            NYXTRACE(0x0, L"receiving data from "
+                     << Nyx::CTF_AnsiText(pTcpIpSocket->ClientAddress().Ip().c_str())
+                     << L" port "
+                     << Nyx::CTF_Int(pTcpIpSocket->ClientAddress().Port()) );
+
+            sockBuffer.addDataSize(readSize);
+            char* pStart = sockBuffer.getReadPos();
+            char* pCur = pStart;
+            size_t size = 0;
+            size_t readBufferSize = 0;
+            
+            while ( size < sockBuffer.DataSize() )
+            {
+                if ( *pCur == '\n' )
+                {
+                    *pCur = '\0';
+                    sockBuffer.ReadData(buffer, size+1);
+                    pCur = sockBuffer.getReadPos();
+                    size = 0;
+                    
+                    NYXTRACE(0x0, L"ssl line received : " << Nyx::CTF_AnsiText(buffer) );
+                    NYXTRACE(0x0, L"ssl line len : " << Nyx::CTF_Int(buffer[0]) << L" : " << Nyx::CTF_Int(strlen(buffer)) );
+                }
+                else
+                {
+                    if ( *pCur == '\r' )
+                        *pCur = 0;
+                    
+                    ++ pCur;
+                    ++ size;
+                }
+            }
+            
+            NYXTRACE(0x0, L"sockbuffer remaining data size : " << Nyx::CTF_Int(sockBuffer.DataSize()) );
+            
     //            readSize = BIO_read(m_bio, buffer, 4095);
             
             
-            NYXTRACE(0x0, L"data received - readsize : " << readSize );
+//            NYXTRACE(0x0, L"data received - readsize : " << readSize );
             
         //    if ( readSize == 0 )
         //    {
@@ -169,7 +217,7 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
             
         //    if ( readSize > 0 )
             {
-                NYXTRACE(0x0, Nyx::CTF_AnsiText(buffer) );
+//                NYXTRACE(0x0, Nyx::CTF_AnsiText(buffer) );
             }
             
             SSL_write(m_ssl, header.BufferPtr(), header.length());
@@ -177,8 +225,14 @@ void CSSLConnectionHandler::HandleStream( Nyx::IStreamRW& rStream )
         //    rStream.Write(header.BufferPtr(), header.length(), writtenSize);
         //    rStream.Write(content.BufferPtr(), content.length(), writtenSize );
         }
-        else
-            sleep(1);
+        
+        m_bRunning = ( readSize > 0 );
+//        else
+//        {
+//            NYXTRACE(0x0, L"SSL_read return value : " << Nyx::CTF_Int(readSize));
+//            
+//            sleep(1);
+//        }
     }
     
     NYXTRACE(0x0, L"ending SSLConnection stream handler");
